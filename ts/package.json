@@ -1,0 +1,27 @@
+{
+  "name": "ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ethereumjs/common": "^4.1.0",
+    "@ethereumjs/tx": "^5.1.0",
+    "@ethereumjs/util": "^9.0.1",
+    "@ethereumjs/vm": "^7.1.0",
+    "@types/bn.js": "^5.1.5",
+    "@types/ethereumjs-abi": "^0.6.5",
+    "bn.js": "^5.2.1",
+    "ethereumjs-abi": "^0.6.8",
+    "ethereumjs-util": "^7.1.5",
+    "ethers": "5.7.2",
+    "js-sha3": "^0.9.2",
+    "rlp": "^3.0.0"
+  }
+}

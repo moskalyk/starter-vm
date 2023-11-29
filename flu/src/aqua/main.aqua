@@ -1,0 +1,32 @@
+aqua Main
+
+import "@fluencelabs/aqua-lib/builtin.aqua"
+import "@fluencelabs/aqua-lib/subnet.aqua"
+
+use "deals.aqua"
+use "hosts.aqua"
+import "services.aqua"
+
+export helloWorld, MutexAddressRouter, VM, call
+
+service MutexAddressRouter("mutexaddressrouter"):
+    route(tx: string) -> PeerId
+
+service VM("vm"):
+    call(tx: string) -> bool
+
+func call(peer_id: PeerId, contractAddress: string, tx: string) -> bool:
+
+    peer: *PeerId
+
+    on peer_id:
+        peer <<- MutexAddressRouter.route(contractAddress)
+
+    on peer[0]:
+        res <- VM.call(tx)
+        VM.finish(tx)
+
+    <- res
+
+func helloWorld(name: string) -> string:
+    <- Op.concat_strings("Hello, ", name)
