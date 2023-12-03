@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2022",
+    "target": "es2016",
+    "module": "nodenext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true,
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "lib": ["es5", "es2015.promise", "dom"],
-    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "ts-node": {
     "esm": true

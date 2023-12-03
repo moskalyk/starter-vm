@@ -7,25 +7,35 @@ use "deals.aqua"
 use "hosts.aqua"
 import "services.aqua"
 
-export helloWorld, MutexAddressRouter, VM, call
+export helloWorld, MutexAddressRouter, VM, call, deploy
 
-service MutexAddressRouter("mutexaddressrouter"):
+service AddressRouter("addressrouter"): -- could be marine service pulling from onchain ids
     route(tx: string) -> PeerId
 
 service VM("vm"):
     call(tx: string) -> bool
+    deploy(tx: string) -> bool
 
-func call(peer_id: PeerId, contractAddress: string, tx: string) -> bool:
+func call(relay_id: PeerId, peer_id: PeerId, contractAddress: string, tx: string) -> bool:
 
     peer: *PeerId
 
     on peer_id:
-        peer <<- MutexAddressRouter.route(contractAddress)
+        peer <<- AddressRouter.route(contractAddress)
 
-    on peer[0]:
+    on peer[0] via relay_id:
         res <- VM.call(tx)
-        VM.finish(tx)
+    <- res
 
+func deploy(relay_id: PeerId, peer_id: PeerId, contractAddress: string, tx: string) -> bool:
+
+    peer: *PeerId
+
+    on peer_id:
+        peer <<- AddressRouter.route(contractAddress)
+
+    on peer[0] via relay_id:
+        res <- VM.deploy(tx)
     <- res
 
 func helloWorld(name: string) -> string:
